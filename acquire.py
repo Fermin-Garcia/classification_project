@@ -2,15 +2,20 @@
 import pandas as pd 
 import os 
 import env
-# we are using this fucntion to call the code needed to get a connection 
-# between SQL and Python using my own ENV file where I keep my credentials
-# Additionally, important to note that I hard coded the database in my env file and
-# this was done on purpose to keep access to only one database. 
 
-def get_connection(user=env.username,password=env.password,host=env.host,db=env.db):
+
+# First we need to use our env file to access our mysql data base
+def get_connection():
+    
+    '''
+    This function will return the link to access mysql database. 
+    '''
+    user=env.username
+    password=env.password
+    host=env.host
+    db=env.db
     return f'mysql+pymysql://{user}:{password}@{host}/{db}'
 
-    
     
 # next we define the query that we are calling from sql 
 query = '''select * 
@@ -23,7 +28,8 @@ left join customer_churn using(customer_id)
 left join customer_contracts using (customer_id)
 left join customer_details using (customer_id)
 left join customer_payments using (customer_id)
-left join customer_subscriptions using (customer_id)'''
+left join customer_subscriptions using (customer_id)
+'''
 
 
 # then we get this and use it to make a fucntion that 
